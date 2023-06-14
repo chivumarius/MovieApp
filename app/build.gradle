@@ -1,0 +1,113 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    // (KAP LIB 0-2) "Kapt" Annotation Processor
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.chivumarius.movieapp'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.chivumarius.movieapp"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // (TMDB 0-1) "API_KEY":
+        buildConfigField "String","API_KEY","\"b7c43aa3400d1ef2272a052faa6e9902\""
+        // (TMBD 0-2) "BASE_URL"  FOR LINK:
+        buildConfigField "String","BASE_URL","\"https://api.themoviedb.org/3/\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // (DB LIB 0) "DATA BINDING":
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+
+    // (VM LIB 0-2)  ADDING  "VERSION" OF "LIFECYCLE_VERSION":
+    def lifecycle_version = "2.6.1"
+
+    // (VM LIB 0-1) ADDING "VIEW MODEL" LIBRARY:
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // (LD LIB 0) "LiveData"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // (VM LIB 0-3) "Saved State Module" for "ViewModel"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+
+    // (KAP LIB 0-1) "kapt" Annotation Processor
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+
+    // (ROOM LIB 0-1) RooM Local Database
+    def room_version = "2.5.1"
+
+    // (ROOM LIB 0-2) Implementation "Room-Runtime"
+    implementation("androidx.room:room-runtime:$room_version")
+
+    // (ROOM LIB 0-3) "Kapt" Annotation Processor for "Room" with "kapt":
+    kapt("androidx.room:room-compiler:$room_version")
+
+    // (ROOM LIB 0-4)  Optional - "Kotlin Extensions"
+    //                  → and "Coroutines Support"
+    //                  → for "Room"
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // (CO LIB 0) "Kotlinx-Coroutines-Android"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    // (DAGGER  LIB 0-1) "DAGGER" → "DEPENDENCY  INJECTION" FRAMEWORK:
+    implementation 'com.google.dagger:dagger:2.46.1'
+
+    // (DAGGER  LIB 0-2) The "Kapt" Annotation Processor for "Dagger"
+    kapt 'com.google.dagger:dagger-android-processor:2.46.1'
+    kapt 'com.google.dagger:dagger-compiler:2.46.1'
+
+
+    // (RF LIB 0-1) "RETROFIT"  LIBRARY  (For Converting "JSON" Object → to "Kotlin" Object)
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // (RF LIB 0-2) "GSON CONVERTOR"
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // (RF LIB 0-3) "Retrofit Logging Interceptor"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.11.0"
+
+    // (GL LIB 0-1) "Glide" Library - Management and Image Loading Framework
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+
+    // (GL LIB 0-2) "Kapt" for "Glide" Library
+    kapt 'com.github.bumptech.glide:compiler:4.15.1'
+}
